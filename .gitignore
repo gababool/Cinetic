@@ -5,3 +5,6 @@
 __pycache__/
 *.py[cod]
 *.pyo
+
+# Data
+data/ml-latest-small
