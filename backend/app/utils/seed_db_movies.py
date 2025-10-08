@@ -34,7 +34,12 @@ def fetch_movies(sort_by, genre_id=None, pages=25, min_votes=None):
         params = {
             "sort_by": sort_by,
             "include_adult": "false",
+            "include_video": "false",
+            "with_release_type": "2|3",
             "page": page,
+            "vote_average.gte": 6, 
+            "with_runtime.gte": 60, 
+
         }
         if genre_id:
             params["with_genres"] = genre_id
@@ -126,7 +131,8 @@ def process_movie(basic_info, genre_obj=None):
     movie = Movie(
         imdb_id=imdb_id,
         tmdb_id=tmdb_id,
-        title=data.get("title", ""),
+        original_title=data.get("original_title" or data.get("title")),
+        title=data.get("title"),
         overview=data.get("overview"),
         release_date=data.get("release_date"),
         popularity=data.get("popularity"),
@@ -160,9 +166,9 @@ def process_movie(basic_info, genre_obj=None):
         if director not in movie.directors:
             movie.directors.append(director)
     
-    # Process top 5 actors
+    # Process top 6 actors
     cast = credits.get("cast", [])
-    top_actors = cast[:5]
+    top_actors = cast[:6]
     
     for actor_info in top_actors:
         actor = get_or_create_actor(
@@ -199,7 +205,7 @@ def main():
                 "vote_average.desc",
                 genre_id=gid,
                 pages=50,
-                min_votes=1000
+                min_votes=500
             )
             
             print(f"Found {len(top_movies)} top-rated {name} movies")
