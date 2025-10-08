@@ -23,6 +23,7 @@ class Movie(db.Model):
     imdb_id = db.Column(db.String(16), primary_key=True, index=True)
     tmdb_id = db.Column(db.Integer, unique=True, nullable=True, index=True)
     title = db.Column(db.String(255), nullable=False)
+    original_title = db.Column(db.String(255), nullable=False)
     overview = db.Column(db.Text)
     release_date = db.Column(db.String(20))
     popularity = db.Column(db.Float)
