@@ -2,7 +2,7 @@ import pandas as pd
 
 ratings_path = "../../../data/ml-latest-small/ratings.csv"
 links_path   = "../../../data/ml-latest-small/links.csv"
-output_path  = "../../../data/ml-latest-small/ratings_with_imdb.csv"
+output_path  = "../../../data/ml-latest-small/ratings_cleaned.csv"
 
 links = pd.read_csv(links_path, dtype={"imdbId": str})
 ratings = pd.read_csv(ratings_path)
