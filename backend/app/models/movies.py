@@ -1,4 +1,5 @@
 from app import db
+
 movie_genres = db.Table(
     "movie_genres",
     db.Column("movie_id", db.String(16), db.ForeignKey("movies.imdb_id", ondelete="CASCADE"), primary_key=True),
@@ -37,6 +38,7 @@ class Movie(db.Model):
     genres = db.relationship("Genre", secondary=movie_genres, back_populates="movies")
     directors = db.relationship("Director", secondary=movie_directors, back_populates="movies")
     actors = db.relationship("Actor", secondary=movie_actors, back_populates="movies")
+    ratings = db.relationship( "Rating", back_populates="movie", foreign_keys="Rating.imdb_id", cascade="all, delete-orphan",)
 
 class Genre(db.Model):
     __tablename__ = "genres"
